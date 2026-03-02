@@ -45,6 +45,21 @@ export default function App() {
   );
 }
 
+const readStoredIdeas = (): HackathonIdea[] => {
+  const raw = localStorage.getItem('generated_ideas');
+  if (!raw) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    localStorage.removeItem('generated_ideas');
+    return [];
+  }
+};
+
 function MainApp() {
   const navigate = useNavigate();
   const [showGenerator, setShowGenerator] = useState(false);
@@ -66,7 +81,7 @@ function MainApp() {
       const data = await generateHackathonIdeas(inputs);
       
       // Save to localStorage for the Showcase page
-      const existingIdeas = JSON.parse(localStorage.getItem('generated_ideas') || '[]');
+      const existingIdeas = readStoredIdeas();
       const updatedIdeas = [...data.ideas, ...existingIdeas].slice(0, 20); // Keep last 20
       localStorage.setItem('generated_ideas', JSON.stringify(updatedIdeas));
 
@@ -309,7 +324,7 @@ function MainApp() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {(() => {
-            const savedIdeas = JSON.parse(localStorage.getItem('generated_ideas') || '[]');
+            const savedIdeas = readStoredIdeas();
             if (savedIdeas.length === 0) {
               return (
                 <div className="col-span-full py-20 glass-card rounded-[40px] border border-dashed border-white/10 text-center">

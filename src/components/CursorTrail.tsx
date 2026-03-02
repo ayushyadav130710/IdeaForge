@@ -72,7 +72,11 @@ export const CursorTrail: React.FC = () => {
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('touchmove', handleTouchMove);
 
+    let isRunning = true;
+    let animationFrameId = 0;
+
     const animate = () => {
+      if (!isRunning) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       for (let i = 0; i < particles.current.length; i++) {
@@ -119,16 +123,18 @@ export const CursorTrail: React.FC = () => {
         ctx.shadowBlur = 0;
       }
 
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
-    const animationId = requestAnimationFrame(animate);
+    animationFrameId = requestAnimationFrame(animate);
 
     return () => {
+      isRunning = false;
       window.removeEventListener('resize', resizeCanvas);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('touchmove', handleTouchMove);
-      cancelAnimationFrame(animationId);
+      cancelAnimationFrame(animationFrameId);
+      particles.current = [];
     };
   }, []);
 

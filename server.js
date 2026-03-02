@@ -15,7 +15,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = Number.parseInt(process.env.PORT || '5000', 10);
-const CORS_ORIGIN = process.env.CORS_ORIGIN || 'http://localhost:3000';
+const DEFAULT_CORS_ORIGINS = ['http://localhost:3000', 'http://127.0.0.1:3000'];
+const CORS_ORIGIN = process.env.CORS_ORIGIN || DEFAULT_CORS_ORIGINS.join(',');
 const CONTACT_TO_EMAIL = process.env.CONTACT_TO_EMAIL || '';
 const CONTACT_FROM_EMAIL = process.env.CONTACT_FROM_EMAIL || process.env.SMTP_USER || '';
 const CONTACT_RATE_LIMIT_WINDOW_MS = Number.parseInt(
@@ -494,8 +495,23 @@ if (fs.existsSync(distPath)) {
 app.use(express.static(__dirname));
 
 app.get('*', (req, res, next) => {
-  if (req.path.startsWith('/api') || path.extname(req.path)) {
+  if (req.path.startsWith('/api')) {
     return next();
+  }
+
+  const extension = path.extname(req.path).toLowerCase();
+
+  // Let static middleware handle non-HTML assets (.js, .css, images, etc.).
+  if (extension && extension !== '.html') {
+    return next();
+  }
+
+  // Keep standalone static pages working when they exist in the project root.
+  if (extension === '.html') {
+    const requestedHtmlPath = path.join(__dirname, req.path.replace(/^\/+/, ''));
+    if (fs.existsSync(requestedHtmlPath)) {
+      return res.sendFile(requestedHtmlPath);
+    }
   }
 
   if (fs.existsSync(distIndexPath)) {
@@ -527,6 +543,35 @@ app.use((err, _req, res, _next) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on http://localhost:${PORT}`);
-});
+const MAX_PORT_RETRIES = 10;
+
+const startServer = (port, retries = 0) => {
+  const server = app.listen(port, () => {
+    const retryNote =
+      port === PORT
+        ? ''
+        : ` (fallback from requested port ${PORT}; update VITE_API_PROXY_TARGET if needed)`;
+    console.log(`Server listening on http://localhost:${port}${retryNote}`);
+  });
+
+  server.on('error', (error) => {
+    if (error?.code === 'EADDRINUSE' && retries < MAX_PORT_RETRIES) {
+      const nextPort = port + 1;
+      console.warn(`Port ${port} is already in use. Trying port ${nextPort}...`);
+      startServer(nextPort, retries + 1);
+      return;
+    }
+
+    if (error?.code === 'EADDRINUSE') {
+      console.error(
+        `Unable to start server. Ports ${PORT}-${port} are in use. Set PORT in .env to an available value.`,
+      );
+    } else {
+      console.error('Server failed to start:', error);
+    }
+
+    process.exit(1);
+  });
+};
+
+startServer(PORT);
