@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | IdeaForge AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030014;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glow-purple {
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+
+        .input-focus:focus {
+            ring: 2px;
+            ring-color: rgba(147, 51, 234, 0.5);
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6 relative">
+    <!-- Animated Background Blobs -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px] animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[45%] h-[45%] bg-pink-600/10 rounded-full blur-[120px] animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="w-full max-w-xl relative z-10">
+        <div class="glass-card rounded-[48px] p-10 md:p-16 glow-purple border border-white/10">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 text-purple-400 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-6">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                    Get In Touch
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4 text-glow">Contact Us</h1>
+                <p class="text-white/50 text-lg leading-relaxed max-w-md mx-auto">
+                    Have questions or feedback? We'd love to hear from you. Send us a message below.
+                </p>
+            </div>
+
+            <form id="contactForm" class="space-y-8">
+                <div id="successMessage" class="hidden p-6 bg-emerald-500/10 border border-emerald-500/20 rounded-3xl text-center mb-8">
+                    <div class="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Message Sent!</h3>
+                    <p class="text-white/40">Thanks for reaching out. We'll get back to you shortly.</p>
+                </div>
+
+                <div class="form-fields space-y-8">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-[0.3em] text-white/20 mb-3">Full Name</label>
+                        <input 
+                            type="text" 
+                            id="name"
+                            placeholder="John Doe"
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:ring-2 focus:ring-purple-500/50 transition-all outline-none text-white placeholder:text-white/20 hover:bg-white/10"
+                        >
+                        <p id="nameError" class="hidden text-[10px] text-red-400 mt-2 font-bold uppercase tracking-widest">Name is required</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-[0.3em] text-white/20 mb-3">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email"
+                            placeholder="ayush.yadav130710@gmail.com"
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:ring-2 focus:ring-purple-500/50 transition-all outline-none text-white placeholder:text-white/20 hover:bg-white/10"
+                        >
+                        <p id="emailError" class="hidden text-[10px] text-red-400 mt-2 font-bold uppercase tracking-widest">Valid email is required</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-[0.3em] text-white/20 mb-3">Message</label>
+                        <textarea 
+                            id="message"
+                            rows="4"
+                            placeholder="How can we help you?"
+                            class="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:ring-2 focus:ring-purple-500/50 transition-all outline-none resize-none text-white placeholder:text-white/20 hover:bg-white/10"
+                        ></textarea>
+                        <p id="messageError" class="hidden text-[10px] text-red-400 mt-2 font-bold uppercase tracking-widest">Message is required</p>
+                    </div>
+
+                    <button 
+                        type="submit"
+                        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl py-5 font-bold text-sm flex items-center justify-center gap-3 hover:scale-[1.02] transition-all shadow-2xl glow-purple group relative overflow-hidden"
+                    >
+                        <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
+                        <span class="relative z-10">Send Message</span>
+                        <i data-lucide="send" class="w-5 h-5 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
+                    </button>
+                </div>
+            </form>
+
+            <div class="mt-16 pt-12 border-t border-white/10">
+                <div class="text-center">
+                    <p class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/20 mb-6">Owner Portfolio</p>
+                    <a 
+                        href="https://ayush-yadav.vercel.app/" 
+                        target="_blank" 
+                        class="inline-flex items-center gap-3 px-8 py-4 bg-white/5 border border-white/10 rounded-2xl text-sm font-bold text-white/70 hover:text-white hover:bg-white/10 transition-all group"
+                    >
+                        Visit Portfolio
+                        <i data-lucide="external-link" class="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-12 text-center">
+            <a href="/" class="text-xs font-bold uppercase tracking-[0.3em] text-white/20 hover:text-purple-400 transition-colors">
+                ← Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        const form = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        const formFields = document.querySelector('.form-fields');
+
+        const validateEmail = (email) => {
+            return String(email)
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+        };
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name');
+            const email = document.getElementById('email');
+            const message = document.getElementById('message');
+
+            const nameError = document.getElementById('nameError');
+            const emailError = document.getElementById('emailError');
+            const messageError = document.getElementById('messageError');
+
+            let isValid = true;
+
+            // Reset errors
+            nameError.classList.add('hidden');
+            emailError.classList.add('hidden');
+            messageError.classList.add('hidden');
+            name.classList.remove('ring-2', 'ring-red-500/20');
+            email.classList.remove('ring-2', 'ring-red-500/20');
+            message.classList.remove('ring-2', 'ring-red-500/20');
+
+            if (!name.value.trim()) {
+                nameError.classList.remove('hidden');
+                name.classList.add('ring-2', 'ring-red-500/20');
+                isValid = false;
+            }
+
+            if (!email.value.trim() || !validateEmail(email.value)) {
+                emailError.classList.remove('hidden');
+                email.classList.add('ring-2', 'ring-red-500/20');
+                isValid = false;
+            }
+
+            if (!message.value.trim()) {
+                messageError.classList.remove('hidden');
+                message.classList.add('ring-2', 'ring-red-500/20');
+                isValid = false;
+            }
+
+            if (isValid) {
+                formFields.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+                
+                // Optional: Reset form after some time
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                    formFields.classList.remove('hidden');
+                    form.reset();
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Information | IdeaForge AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #030014;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .glow-purple {
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.4);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        @keyframes blob {
+            0% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0px, 0px) scale(1); }
+        }
+
+        .animate-blob {
+            animation: blob 7s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+<body class="min-h-screen relative">
+    <!-- Animated Background Blobs -->
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-purple-600/10 rounded-full blur-[120px] animate-blob"></div>
+        <div class="absolute top-[20%] right-[-10%] w-[40%] h-[40%] bg-blue-600/10 rounded-full blur-[120px] animate-blob animation-delay-2000"></div>
+        <div class="absolute bottom-[-10%] left-[20%] w-[45%] h-[45%] bg-pink-600/10 rounded-full blur-[120px] animate-blob animation-delay-4000"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <i data-lucide="rocket" class="w-6 h-6 text-white"></i>
+                </div>
+                <span class="font-bold text-xl tracking-tight text-glow">IdeaForge</span>
+            </a>
+            <div class="hidden md:flex items-center gap-10">
+                <a href="/#home" class="text-sm font-medium text-white/60 hover:text-white transition-colors">Home</a>
+                <a href="/#features" class="text-sm font-medium text-white/60 hover:text-white transition-colors">Features</a>
+                <a href="/#about" class="text-sm font-medium text-white/60 hover:text-white transition-colors">About</a>
+                <a href="/contact.html" class="text-sm font-medium text-white/60 hover:text-white transition-colors">Contact</a>
+            </div>
+            <a href="/" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-2.5 rounded-full font-bold text-sm hover:scale-105 transition-all shadow-lg">
+                Get Started
+            </a>
+        </div>
+    </nav>
+
+    <main class="relative z-10 pt-40 pb-24 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card rounded-[48px] p-10 md:p-16 glow-purple border border-white/10">
+                <div class="flex items-center gap-6 mb-12">
+                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center shadow-inner border border-white/10">
+                        <i data-lucide="cpu" class="w-8 h-8 text-indigo-400"></i>
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-glow">API Information</h1>
+                </div>
+
+                <div class="space-y-12 text-white/70 leading-relaxed">
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <i data-lucide="brain" class="w-5 h-5 text-purple-400"></i>
+                            Google Gemini API Usage
+                        </h2>
+                        <p>
+                            IdeaForge AI leverages the state-of-the-art Google Gemini API (specifically Gemini 3.1 Pro) to architect project proposals. The API processes your input constraints—such as domain, skill level, and time limits—to generate deep technical reasoning and innovative project ideas. This integration allows us to provide high-quality, structured output that mimics the advice of an elite hackathon mentor.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <i data-lucide="zap" class="w-5 h-5 text-blue-400"></i>
+                            Dynamic AI Response Generation
+                        </h2>
+                        <p>
+                            Every response you see on IdeaForge is generated dynamically in real-time. We do not use a static database of ideas. Instead, the AI analyzes your specific constraints to create a unique project architecture, including frontend/backend stacks, core features, and a development roadmap. This ensures that every team receives a tailored strategy that fits their unique situation.
+                        </p>
+                    </section>
+
+                    <section>
+                        <h2 class="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                            <i data-lucide="check-circle" class="w-5 h-5 text-pink-400"></i>
+                            Compliance with AI Usage Policies
+                        </h2>
+                        <p>
+                            Our implementation strictly adheres to Google's Generative AI Prohibited Use Policy and safety guidelines. We ensure that all prompts are engineered to produce safe, ethical, and helpful content. We do not use the API to generate harmful, deceptive, or malicious content. Our goal is to foster innovation and learning in the global developer community.
+                        </p>
+                    </section>
+
+                    <section class="pt-8 border-t border-white/10">
+                        <p class="text-sm text-white/40 italic">
+                            IdeaForge AI is an independent application and is not affiliated with Google. Gemini is a trademark of Google LLC.
+                        </p>
+                    </section>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center">
+                <a href="/" class="text-xs font-bold uppercase tracking-[0.3em] text-white/20 hover:text-purple-400 transition-colors">
+                    ← Back to Home
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="glass border-t border-white/10 py-16 relative z-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-12">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
+                    <i data-lucide="rocket" class="w-5 h-5 text-white"></i>
+                </div>
+                <span class="font-bold text-lg tracking-tight">IdeaForge</span>
+            </div>
+            <div class="text-center">
+                <p class="text-xs text-white/30 font-medium">
+                    © <span id="copyright-year">2024</span> IdeaForge AI. Built for the next generation of builders.
+                </p>
+                <p class="text-[10px] text-white/10 font-bold uppercase tracking-[0.2em] mt-1">
+                    Contact: <a href="mailto:ayush.yadav130710@gmail.com" class="hover:text-purple-400 transition-colors">ayush.yadav130710@gmail.com</a>
+                </p>
+            </div>
+            <div class="flex gap-10 text-xs font-bold uppercase tracking-widest text-white/30">
+                <a href="/privacy.html" class="hover:text-purple-400 transition-colors">Privacy</a>
+                <a href="/terms.html" class="hover:text-purple-400 transition-colors">Terms</a>
+                <a href="/api.html" class="text-purple-400 transition-colors">API</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        
+        // Dynamic Date Logic
+        const now = new Date();
+        const year = now.getFullYear();
+        document.getElementById('copyright-year').textContent = year;
+    </script>
+</body>
+</html>
