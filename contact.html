@@ -86,6 +86,13 @@
                     <h3 class="text-xl font-bold text-white mb-2">Message Sent!</h3>
                     <p class="text-white/40">Thanks for reaching out. We'll get back to you shortly.</p>
                 </div>
+                <div id="errorMessage" class="hidden p-6 bg-red-500/10 border border-red-500/20 rounded-3xl text-center mb-8">
+                    <div class="w-12 h-12 bg-red-500/20 text-red-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i data-lucide="alert-circle" class="w-6 h-6"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Could Not Send</h3>
+                    <p id="errorMessageText" class="text-white/40">Please try again in a moment.</p>
+                </div>
 
                 <div class="form-fields space-y-8">
                     <div>
@@ -122,11 +129,12 @@
                     </div>
 
                     <button 
+                        id="submitButton"
                         type="submit"
                         class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-2xl py-5 font-bold text-sm flex items-center justify-center gap-3 hover:scale-[1.02] transition-all shadow-2xl glow-purple group relative overflow-hidden"
                     >
                         <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-                        <span class="relative z-10">Send Message</span>
+                        <span id="submitButtonText" class="relative z-10">Send Message</span>
                         <i data-lucide="send" class="w-5 h-5 relative z-10 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"></i>
                     </button>
                 </div>
@@ -160,17 +168,34 @@
 
         const form = document.getElementById('contactForm');
         const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorMessageText = document.getElementById('errorMessageText');
         const formFields = document.querySelector('.form-fields');
+        const submitButton = document.getElementById('submitButton');
+        const submitButtonText = document.getElementById('submitButtonText');
+        const defaultButtonLabel = submitButtonText.textContent;
 
-        const validateEmail = (email) => {
-            return String(email)
-                .toLowerCase()
-                .match(
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-                );
+        const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).toLowerCase());
+
+        const setLoading = (loading) => {
+            submitButton.disabled = loading;
+            submitButton.classList.toggle('opacity-70', loading);
+            submitButton.classList.toggle('cursor-not-allowed', loading);
+            submitButtonText.textContent = loading ? 'Sending...' : defaultButtonLabel;
         };
 
-        form.addEventListener('submit', (e) => {
+        const showErrorBanner = (text) => {
+            errorMessageText.textContent = text;
+            errorMessage.classList.remove('hidden');
+            successMessage.classList.add('hidden');
+        };
+
+        const hideBanners = () => {
+            successMessage.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+        };
+
+        form.addEventListener('submit', async (e) => {
             e.preventDefault();
 
             const name = document.getElementById('name');
@@ -183,7 +208,7 @@
 
             let isValid = true;
 
-            // Reset errors
+            hideBanners();
             nameError.classList.add('hidden');
             emailError.classList.add('hidden');
             messageError.classList.add('hidden');
@@ -209,16 +234,61 @@
                 isValid = false;
             }
 
-            if (isValid) {
+            if (!isValid) {
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: name.value.trim(),
+                        email: email.value.trim(),
+                        message: message.value.trim(),
+                    }),
+                });
+
+                const payload = await response.json().catch(() => ({}));
+
+                if (!response.ok) {
+                    const fieldErrors = payload.fieldErrors || {};
+
+                    if (fieldErrors.name) {
+                        nameError.textContent = fieldErrors.name;
+                        nameError.classList.remove('hidden');
+                        name.classList.add('ring-2', 'ring-red-500/20');
+                    }
+                    if (fieldErrors.email) {
+                        emailError.textContent = fieldErrors.email;
+                        emailError.classList.remove('hidden');
+                        email.classList.add('ring-2', 'ring-red-500/20');
+                    }
+                    if (fieldErrors.message) {
+                        messageError.textContent = fieldErrors.message;
+                        messageError.classList.remove('hidden');
+                        message.classList.add('ring-2', 'ring-red-500/20');
+                    }
+
+                    throw new Error(payload.error || 'Failed to send your message. Please try again.');
+                }
+
                 formFields.classList.add('hidden');
                 successMessage.classList.remove('hidden');
-                
-                // Optional: Reset form after some time
+                form.reset();
+
                 setTimeout(() => {
                     successMessage.classList.add('hidden');
                     formFields.classList.remove('hidden');
-                    form.reset();
                 }, 5000);
+            } catch (error) {
+                showErrorBanner(error.message || 'Failed to send your message. Please try again later.');
+            } finally {
+                setLoading(false);
             }
         });
     </script>
