@@ -42,7 +42,7 @@ Prompt engineering is a key differentiator:
 - AI: Google Gemini API with prompt engineering for structured idea generation
 
 # 7. Screenshots
-> Replace placeholders with actual project screenshots before final submission.
+
 
 ![IdeaForge Landing Page](./docs/screenshots/landing-page.png)
 ![IdeaForge Idea Generator](./docs/screenshots/idea-generator.png)
