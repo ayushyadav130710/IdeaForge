@@ -188,7 +188,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
                 </div>
                 <h3 className="text-5xl font-bold text-white mb-10 leading-[1.1] tracking-tight text-glow">Empowering the Next Generation of Builders.</h3>
                 <p className="text-xl text-white/50 mb-12 leading-relaxed font-medium">
-                  IdeaForge was born from a simple observation: the hardest part of any hackathon isn't the coding—it's the strategy. We've seen brilliant teams fail because they lacked a clear, innovative blueprint.
+                  IdeaForge was born from a simple observation: the hardest part of any hackathon is not coding - it is strategy. We've seen brilliant teams fail because they lacked a clear, innovative blueprint.
                 </p>
                 <div className="glass-card p-10 rounded-[40px] border border-white/10 mb-12 glow-indigo">
                   <h4 className="font-bold text-white mb-4 flex items-center gap-3 text-lg">

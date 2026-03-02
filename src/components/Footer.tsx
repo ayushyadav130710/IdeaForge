@@ -25,7 +25,7 @@ export const Footer: React.FC = () => {
 
           <div className="text-center md:text-right">
             <p className="text-sm text-white/20 font-medium">
-              © {currentYear} IdeaForge AI. All rights reserved.
+              Copyright {currentYear} IdeaForge AI. All rights reserved.
             </p>
             <p className="text-[10px] text-white/10 font-bold uppercase tracking-[0.2em] mt-1">
               Contact: <a href="mailto:ayush.yadav130710@gmail.com" className="hover:text-purple-400 transition-colors">ayush.yadav130710@gmail.com</a>

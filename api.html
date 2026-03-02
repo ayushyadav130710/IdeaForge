@@ -102,7 +102,7 @@
                             Google Gemini API Usage
                         </h2>
                         <p>
-                            IdeaForge AI leverages the state-of-the-art Google Gemini API (specifically Gemini 3.1 Pro) to architect project proposals. The API processes your input constraints—such as domain, skill level, and time limits—to generate deep technical reasoning and innovative project ideas. This integration allows us to provide high-quality, structured output that mimics the advice of an elite hackathon mentor.
+                            IdeaForge AI leverages the state-of-the-art Google Gemini API (specifically Gemini 3.1 Pro) to architect project proposals. The API processes your input constraints - such as domain, skill level, and time limits - to generate deep technical reasoning and innovative project ideas. This integration allows us to provide high-quality, structured output that mimics the advice of an elite hackathon mentor.
                         </p>
                     </section>
 
@@ -128,7 +128,7 @@
 
                     <section class="pt-8 border-t border-white/10">
                         <p class="text-sm text-white/40 italic">
-                            IdeaForge AI is an independent application and is not affiliated with Google. Gemini is a trademark of Google LLC.
+                            IdeaForge AI is an independent application and is not affiliated with Google. Gemini is a trademark of Google LLC. Last updated: <span id="last-updated-date">March 2024</span>.
                         </p>
                     </section>
                 </div>
@@ -136,7 +136,7 @@
 
             <div class="mt-12 text-center">
                 <a href="/" class="text-xs font-bold uppercase tracking-[0.3em] text-white/20 hover:text-purple-400 transition-colors">
-                    ← Back to Home
+                    &larr; Back to Home
                 </a>
             </div>
         </div>
@@ -152,7 +152,7 @@
             </div>
             <div class="text-center">
                 <p class="text-xs text-white/30 font-medium">
-                    © <span id="copyright-year">2024</span> IdeaForge AI. Built for the next generation of builders.
+                    Copyright <span id="copyright-year">2024</span> IdeaForge AI. Built for the next generation of builders.
                 </p>
                 <p class="text-[10px] text-white/10 font-bold uppercase tracking-[0.2em] mt-1">
                     Contact: <a href="mailto:ayush.yadav130710@gmail.com" class="hover:text-purple-400 transition-colors">ayush.yadav130710@gmail.com</a>
@@ -172,7 +172,10 @@
         // Dynamic Date Logic
         const now = new Date();
         const year = now.getFullYear();
+        const monthYear = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric' }).format(now);
         document.getElementById('copyright-year').textContent = year;
+        const lastUpdatedElem = document.getElementById('last-updated-date');
+        if (lastUpdatedElem) lastUpdatedElem.textContent = monthYear;
     </script>
 </body>
 </html>

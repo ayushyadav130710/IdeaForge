@@ -37,6 +37,7 @@ Prompt engineering is a key differentiator:
 - The model is guided to provide architecture-level reasoning, not generic text.
 
 # 6. Technology Stack
+## Built With
 - Frontend: React 19, TypeScript, Vite, Tailwind CSS, Motion, React Router
 - Backend: Node.js, Express, Nodemailer, Express Rate Limit, CORS, JSON middleware
 - AI: Google Gemini API with prompt engineering for structured idea generation
